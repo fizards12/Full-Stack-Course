@@ -1,4 +1,4 @@
-## Diagram of notes page with _Single Page Application Style_
+## Diagram of adding new note to notes page with _Single Page Application Style_
 ```mermaid
 sequenceDiagram
     participant browser
