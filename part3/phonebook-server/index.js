@@ -24,7 +24,7 @@ let persons = [
   },
 ];
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 const app = express();
 
 const generateId = () => {
@@ -104,5 +104,5 @@ app.delete("/api/persons/:id", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`The server runs on http://localhost:${PORT}`);
+  console.log(`The server runs on PORT ${PORT}`);
 });
