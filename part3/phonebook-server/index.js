@@ -32,9 +32,13 @@ const generateId = () => {
   return MaxId + 1;
 };
 
+morgan.token("body", (req, res) => {
+  return JSON.stringify(req.body);
+});
+//Middlewares
 app.use(cors());
 app.use(express.json());
-
+app.use(express.static("dist"));
 app.use(
   morgan((tokens, req, res) =>
     [
@@ -44,13 +48,11 @@ app.use(
       tokens.res(req, res, "content-length"),
       "-",
       tokens["response-time"](req, res),
-      "ms", tokens.body(req,res),
+      "ms",
+      tokens.body(req, res),
     ].join(" ")
   )
 );
-morgan.token("body", (req,res) => {
-  return JSON.stringify(req.body);
-});
 
 app.get("/", (req, res) => {
   res.send("<h1>Hello to Phonebook Server</h1>");
