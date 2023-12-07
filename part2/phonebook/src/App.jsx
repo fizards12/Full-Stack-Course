@@ -31,7 +31,7 @@ function App() {
       if (existed.number === updatedPerson.number) {
         setNotification({
           type: "error",
-          message: `Information of '${existed}' is already exists`,
+          message: `Information of '${existed.name}' is already exists`,
         });
 
         setTimeout(() => {
