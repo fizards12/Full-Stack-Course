@@ -57,7 +57,7 @@ app.get("/api/persons/:id", (req, res, next) => {
   Person.findById(id)
     .then((result) => {
       if (!result) {
-        return res.status(404).end();
+        return res.status(404).json({error: `Person Information Not found`});
       }
       return res.json(result);
     })
@@ -85,13 +85,13 @@ app.post("/api/persons", (req, res, next) => {
   let isExist = false;
   Person.findOne({ name: body.name });
   if (!body.name) {
-    return res.status(400).json({ err: "name is missing" });
+    return res.status(400).json({ error: "name is missing" });
   } else if (!body.number) {
-    return res.status(400).json({ err: "number is missing" });
+    return res.status(400).json({ error: "number is missing" });
   } else {
     Person.findOne({ name: body.name }).then((person) => {
       if (person) {
-        res.status(400).json({ err: "name must be unique" });
+        res.status(400).json({ error: "name must be unique" });
       } else {
         const newPerson = new Person({
           name: body.name,
@@ -130,7 +130,7 @@ app.delete("/api/persons/:id", (req, res, next) => {
       if (result) {
         res.status(204).end();
       } else {
-        res.status(404).send(`Already Deleted`);
+        res.status(404).json({error: `Person Information has been already deleted`});
       }
     })
     .catch((err) => next(err));
