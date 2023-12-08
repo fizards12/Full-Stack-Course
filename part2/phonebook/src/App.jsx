@@ -64,24 +64,42 @@ function App() {
                 message: null,
               });
             }, 3000);
+          })
+          .catch((err) => {
+            setNotification({
+              type: "error",
+              message: err.response.data.error,
+            });
+            setTimeout(() => {
+              setNotification({
+                type: null,
+                message: null,
+              });
+            }, 3000);
           });
       }
     } else {
-      const newPerson = { id: persons.length + 1, ...person };
-      personServices.create(newPerson).then((newPerson) => {
-        setPersons(persons.concat(newPerson));
-        setNotification({
-          type: "success",
-          message: `'${newPerson.name}' Added`,
-        });
-
-        setTimeout(() => {
+      personServices
+        .create(person)
+        .then((response) => {
+          setPersons(persons.concat(response));
           setNotification({
-            type: null,
-            message: null,
+            type: "success",
+            message: `'${response.name}' Added`,
           });
-        }, 3000);
-      });
+        })
+        .catch((err) => {
+          setNotification({
+            type: "error",
+            message: err.response.data.error,
+          });
+          setTimeout(() => {
+            setNotification({
+              type: null,
+              message: null,
+            });
+          }, 3000);
+        });
     }
   };
 
